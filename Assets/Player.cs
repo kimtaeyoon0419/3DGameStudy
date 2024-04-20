@@ -10,12 +10,15 @@ public class Player : MonoBehaviour
     public GameObject[] Effects;
     public Transform[] effectPos;
     private Transform AutoEffcetPos;
+    private ParticleSystem particleSystem;
 
     private Transform tr;
     public float MoveSpeed;
     public float turnSpeed;
-    private bool isAttack;
-    
+    private bool isCasting = false;
+    private GameObject castingEffect;
+
+
     PlayerAutoTarget playerAuto;
 
     private int hashAttackCount = Animator.StringToHash("AttackCount");
@@ -26,11 +29,12 @@ public class Player : MonoBehaviour
         tr = GetComponent<Transform>();
         TryGetComponent(out anim); // anim = GetComponent<Animator>();
         playerAuto = GetComponent<PlayerAutoTarget>();
+        particleSystem = GetComponent<ParticleSystem>();
     }
 
     private void Start()
     {
-
+        
     }
     private void FixedUpdate()
     {
@@ -42,7 +46,16 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             anim.SetTrigger("Attack");
-
+        }
+        if (Input.GetKey(KeyCode.E) && isCasting == false)
+        {
+            CastingSkilleffect(Effects[2]);
+            isCasting = true;
+        }
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            CastingSkilleffectDestory();
+            isCasting = false;
         }
     }
 
@@ -56,12 +69,14 @@ public class Player : MonoBehaviour
     {
         float hor = Input.GetAxis("Horizontal");
         float ver = Input.GetAxis("Vertical");
-        float rot = Input.GetAxis("Mouse X");
-        Vector3 moveDir = (Vector3.forward * ver) + (Vector3.right * hor);
+        float rot = Input.GetAxis("Mouse X");Vector3 moveDir = (Vector3.forward * ver) + (Vector3.right * hor);
         
-        
-        PlayerMoveAnim(ver);
-        tr.Translate(moveDir.normalized * MoveSpeed * Time.deltaTime);
+
+        if (isCasting == false)
+        {
+            PlayerMoveAnim(ver);
+            tr.Translate(moveDir.normalized * MoveSpeed * Time.deltaTime);
+        }
         tr.Rotate(Vector3.up * turnSpeed * Time.deltaTime * rot);
     }
 
@@ -120,5 +135,14 @@ public class Player : MonoBehaviour
     {
         GameObject Effcet = Instantiate(effect, effectPos[0].position, tr.rotation);
         Destroy(Effcet, 3f);
+    }
+
+    private void CastingSkilleffect(GameObject effect)
+    {
+        castingEffect = Instantiate(effect, transform.position, tr.rotation);
+    }
+    private void CastingSkilleffectDestory()
+    {
+        Destroy(castingEffect.gameObject);
     }
 }
