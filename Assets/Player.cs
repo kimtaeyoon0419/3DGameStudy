@@ -10,7 +10,6 @@ public class Player : MonoBehaviour
     public GameObject[] Effects;
     public Transform[] effectPos;
     private Transform AutoEffcetPos;
-    private ParticleSystem particleSystem;
 
     private Transform tr;
     public float MoveSpeed;
@@ -18,6 +17,8 @@ public class Player : MonoBehaviour
     private bool isCasting = false;
     private GameObject castingEffect;
 
+    public float HP;
+    public float AttackDMG;
 
     PlayerAutoTarget playerAuto;
 
@@ -29,7 +30,6 @@ public class Player : MonoBehaviour
         tr = GetComponent<Transform>();
         TryGetComponent(out anim); // anim = GetComponent<Animator>();
         playerAuto = GetComponent<PlayerAutoTarget>();
-        particleSystem = GetComponent<ParticleSystem>();
     }
 
     private void Start()
@@ -164,5 +164,19 @@ public class Player : MonoBehaviour
     private void CastingSkilleffectDestory()
     {
         Destroy(castingEffect.gameObject);
+    }
+
+    public void P_TakeDmg(float amount)
+    {
+        HP -= amount;
+    }
+
+    public void P_DealDmg(GameObject target)
+    {
+        var atm = target.GetComponent<AttributeManager>();
+        if (atm != null)
+        {
+            atm.TakeDmg(AttackDMG);
+        }
     }
 }
