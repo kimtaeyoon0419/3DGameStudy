@@ -47,16 +47,8 @@ public class Player : MonoBehaviour
         {
             anim.SetTrigger("Attack");
         }
-        if (Input.GetKey(KeyCode.E) && isCasting == false)
-        {
-            CastingSkilleffect(Effects[2]);
-            isCasting = true;
-        }
-        if (Input.GetKeyUp(KeyCode.E))
-        {
-            CastingSkilleffectDestory();
-            isCasting = false;
-        }
+
+        CastingSkill();
     }
 
     public int AttackCount
@@ -102,6 +94,7 @@ public class Player : MonoBehaviour
         {
             tornadoAttack_2(effect);
         }
+        
     }
 
     /// <summary>
@@ -137,10 +130,37 @@ public class Player : MonoBehaviour
         Destroy(Effcet, 3f);
     }
 
+    
+
+    /// <summary>
+    /// 캐스팅 스킬
+    /// </summary>
+    private void CastingSkill()
+    {
+        if (Input.GetKey(KeyCode.E) && isCasting == false)
+        {
+            CastingSkilleffect(Effects[2]);
+            anim.SetBool("Casting", true);
+            isCasting = true;
+        }
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            CastingSkilleffectDestory();
+            anim.SetBool("Casting", false);
+            isCasting = false;
+        }
+    }
+    /// <summary>
+    /// 캐스팅 스킬 이펙트 소환
+    /// </summary>
+    /// <param name="effect"></param>
     private void CastingSkilleffect(GameObject effect)
     {
         castingEffect = Instantiate(effect, transform.position, tr.rotation);
     }
+    /// <summary>
+    /// 캐스팅 스킬 이펙트 삭제
+    /// </summary>
     private void CastingSkilleffectDestory()
     {
         Destroy(castingEffect.gameObject);
