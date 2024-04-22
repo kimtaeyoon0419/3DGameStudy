@@ -42,7 +42,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1076093521981350}
   serializedVersion: 8
   lengthInSec: 2
-  simulationSpeed: 2
+  simulationSpeed: 1
   stopAction: 0
   cullingMode: 1
   ringBufferMode: 0
@@ -4933,7 +4933,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1102577521431634}
   serializedVersion: 8
   lengthInSec: 2
-  simulationSpeed: 2
+  simulationSpeed: 1
   stopAction: 0
   cullingMode: 1
   ringBufferMode: 0
@@ -9824,7 +9824,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1125486334956330}
   serializedVersion: 8
   lengthInSec: 2
-  simulationSpeed: 2
+  simulationSpeed: 1
   stopAction: 0
   cullingMode: 1
   ringBufferMode: 0
@@ -14706,7 +14706,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1240200096928638}
   serializedVersion: 8
   lengthInSec: 2
-  simulationSpeed: 2
+  simulationSpeed: 1
   stopAction: 0
   cullingMode: 1
   ringBufferMode: 0
@@ -19588,7 +19588,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1453732935108338}
   serializedVersion: 8
   lengthInSec: 2
-  simulationSpeed: 2
+  simulationSpeed: 1
   stopAction: 0
   cullingMode: 1
   ringBufferMode: 0
@@ -24439,7 +24439,6 @@ GameObject:
   - component: {fileID: 4735951889367626}
   - component: {fileID: 198811068889352194}
   - component: {fileID: 199655041276217420}
-  - component: {fileID: 233214551084502263}
   m_Layer: 0
   m_Name: Tornado loop
   m_TagString: Untagged
@@ -24478,7 +24477,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1729166761864512}
   serializedVersion: 8
   lengthInSec: 2
-  simulationSpeed: 2
+  simulationSpeed: 1
   stopAction: 0
   cullingMode: 1
   ringBufferMode: 0
@@ -29318,24 +29317,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &233214551084502263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1729166761864512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7f6d95fe3cde8344b2ae2b6d071bf2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Effects: []
-  effectPos: []
-  MoveSpeed: 0
-  turnSpeed: 0
-  HP: 0
-  AttackDMG: 0
 --- !u!1 &1787669143739076
 GameObject:
   m_ObjectHideFlags: 0
@@ -29378,7 +29359,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1787669143739076}
   serializedVersion: 8
   lengthInSec: 2
-  simulationSpeed: 2
+  simulationSpeed: 1
   stopAction: 0
   cullingMode: 1
   ringBufferMode: 0
@@ -34260,7 +34241,7 @@ ParticleSystem:
   m_GameObject: {fileID: 1854250750785534}
   serializedVersion: 8
   lengthInSec: 2
-  simulationSpeed: 2
+  simulationSpeed: 1
   stopAction: 0
   cullingMode: 1
   ringBufferMode: 0

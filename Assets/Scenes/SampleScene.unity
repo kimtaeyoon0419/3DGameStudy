@@ -741,16 +741,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aabb99a510edfdd4aad2b37a20973371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHp: 0
+  curHp: 0
+  AttackDmg: 0
+  moveSpeed: 0
+  turnSpeed: 200
   Effects:
-  - {fileID: 1729166761864512, guid: b7720d9fd46dcc24ca97e7daf4cabf10, type: 3}
-  - {fileID: 1861938134193064, guid: 808ed80abac09c242b89485425208927, type: 3}
+  - {fileID: 3633220761337432734, guid: 1fbf1e3589253d84e9eac74a045e0490, type: 3}
+  - {fileID: 8186279751206807803, guid: 3ddfb5c82c9226542b562ba10bd8db35, type: 3}
   - {fileID: 143098, guid: 7d5bdfc07d77aab4a963e018ba7bccc4, type: 3}
   effectPos:
   - {fileID: 584132367}
-  MoveSpeed: 10
-  turnSpeed: 200
-  HP: 0
-  AttackDMG: 0
 --- !u!136 &469071269
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -800,6 +801,23 @@ MonoBehaviour:
   radius: 10
   col: []
   target: {fileID: 0}
+--- !u!114 &469071275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469071265}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b1e623dcb513a4408f399677fb23e5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 100
+  curHp: 100
+  AttackDmg: 10
+  moveSpeed: 20
+  turnSpeed: 270
 --- !u!1 &584132366
 GameObject:
   m_ObjectHideFlags: 0
@@ -1188,25 +1206,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 952735076}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27de2fd3af7a51d429f5c3b04b527556, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c178279635f91f47b29b10da7525c81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: {fileID: 0}
-  cam: {fileID: 0}
---- !u!114 &952735082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 952735076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17a2c79016f8d544d81b0a664c9f6be0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HP: 100
-  AttackDMG: 5
+  maxHP: 200
+  curHP: 200
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

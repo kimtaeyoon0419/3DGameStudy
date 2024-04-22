@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : PlayerStat
 {
     Rigidbody rb;
     Animator anim;
@@ -12,13 +12,8 @@ public class Player : MonoBehaviour
     private Transform AutoEffcetPos;
 
     private Transform tr;
-    public float MoveSpeed;
-    public float turnSpeed;
     private bool isCasting = false;
     private GameObject castingEffect;
-
-    public float HP;
-    public float AttackDMG;
 
     PlayerAutoTarget playerAuto;
 
@@ -38,7 +33,7 @@ public class Player : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Move();
+        
     }
 
     void Update()
@@ -49,6 +44,7 @@ public class Player : MonoBehaviour
         }
 
         CastingSkill();
+        Move();
     }
 
     public int AttackCount
@@ -61,13 +57,14 @@ public class Player : MonoBehaviour
     {
         float hor = Input.GetAxis("Horizontal");
         float ver = Input.GetAxis("Vertical");
-        float rot = Input.GetAxis("Mouse X");Vector3 moveDir = (Vector3.forward * ver) + (Vector3.right * hor);
+        float rot = Input.GetAxis("Mouse X");
+        Vector3 moveDir = (Vector3.forward * ver) + (Vector3.right * hor);
         
 
         if (isCasting == false)
         {
             PlayerMoveAnim(ver);
-            tr.Translate(moveDir.normalized * MoveSpeed * Time.deltaTime);
+            tr.Translate(moveDir.normalized * moveSpeed * Time.deltaTime);
         }
         tr.Rotate(Vector3.up * turnSpeed * Time.deltaTime * rot);
     }
@@ -164,19 +161,5 @@ public class Player : MonoBehaviour
     private void CastingSkilleffectDestory()
     {
         Destroy(castingEffect.gameObject);
-    }
-
-    public void P_TakeDmg(float amount)
-    {
-        HP -= amount;
-    }
-
-    public void P_DealDmg(GameObject target)
-    {
-        var atm = target.GetComponent<AttributeManager>();
-        if (atm != null)
-        {
-            atm.TakeDmg(AttackDMG);
-        }
     }
 }
