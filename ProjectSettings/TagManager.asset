@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - TornadoAttack
+  - BLUETEAMUNIT
+  - REDTEAMUNIT
   layers:
   - Default
   - TransparentFX
