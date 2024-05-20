@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 // # Unity
 using UnityEngine;
+using Charater;
 
 public class Warrior : Character
 {

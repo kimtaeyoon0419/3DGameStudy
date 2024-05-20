@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
@@ -28,4 +28,25 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    private void Update()
+    {
+        CheckWinner();
+    }
+
+    #region Private_Function
+    private void CheckWinner()
+    {
+        if (redUnits.Count <= 0)
+        {
+           blueWin = true;
+            Debug.Log("ºí·çÆÀÀÌ ½Â¸®Çß½À´Ï´Ù!");
+        }
+        if(blueUnits.Count <= 0)
+        {
+            redWin = true;
+            Debug.Log("·¹µåÆÀÀÌ ½Â¸®Çß½À´Ï´Ù!");
+        }
+    }
+    #endregion
 }
