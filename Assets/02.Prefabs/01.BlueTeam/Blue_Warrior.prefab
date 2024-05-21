@@ -16768,7 +16768,7 @@ MonoBehaviour:
   speed: 0.5
   curEnemy: {fileID: 0}
   enemyDistance: 0
-  attackRange: 1
+  attackRange: 1.2
   attackSpeed: 1
   damage: 1
   maxHp: 10

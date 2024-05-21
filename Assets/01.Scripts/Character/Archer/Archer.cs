@@ -8,5 +8,13 @@ using Charater;
 
 public class Archer : Character
 {
+    [SerializeField] private GameObject shotSfx;
+    [SerializeField] private GameObject shotPos;
 
+    protected override void Attack()
+    {
+        base.Attack();
+        if(attackSpeed <= 0)
+        Instantiate(shotSfx, shotPos.transform.position, Quaternion.Euler(shotPos.transform.rotation.x, shotPos.transform.rotation.y, shotPos.transform.rotation.z));
+    }
 }

@@ -121,7 +121,8 @@ namespace Charater
                     if (!isDie)
                     {
                         isDie= true;
-                        StopCoroutine(Co_FindEnemy());
+                        StopAllCoroutines();
+                        animator.SetTrigger(hashDeath);
                         StartCoroutine(Co_DeathAnim());
                     }
                     break;
@@ -187,7 +188,7 @@ namespace Charater
                 nmAgent.SetDestination(curEnemy.transform.position);
             }
         }
-        private void Attack()
+        protected virtual void Attack()
         { 
             if(state != State.Die)
             animator.SetTrigger(hashAttack);
@@ -217,7 +218,7 @@ namespace Charater
             isFindEnemyCo = true;
             yield return null;
             float curDistanceToTarger = float.MaxValue;
-
+            
             if (team == Team.blue)
             {
                 foreach (GameObject enemy in GameManager.instance.redUnits)
@@ -244,7 +245,7 @@ namespace Charater
                     }
                 }
             }
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(2f);
             yield return isFindEnemyCo = false;
             if (curEnemy == null || enemyDistance > attackRange)
             {
@@ -254,11 +255,9 @@ namespace Charater
 
         IEnumerator Co_DeathAnim()
         {
-            animator.SetTrigger(hashDeath);
-            yield return new WaitForSeconds(0.05f);
-            float curAnimationTime =animator.GetCurrentAnimatorStateInfo(0).length;
+            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length);
             Instantiate(dieEffect, gameObject.transform.position, Quaternion.identity);
-            yield return new WaitForSeconds(curAnimationTime);
             Destroy(gameObject);
         }
         #endregion
