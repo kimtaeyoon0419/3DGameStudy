@@ -40,7 +40,8 @@ namespace Charater
 
         [Header("Stat")]
         [SerializeField] protected float attackRange;
-        [SerializeField] protected float attackSpeed;
+        [SerializeField] protected float maxAttackSpeed;
+        [SerializeField] protected float curAttackSpeed;
         [SerializeField] protected int damage;
         [SerializeField] protected int maxHp;
         [SerializeField] protected int curHp;
@@ -65,7 +66,7 @@ namespace Charater
             animator = GetComponent<Animator>();
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             if (team == Team.blue)
             {
@@ -79,9 +80,9 @@ namespace Charater
             curHp = maxHp;
         }
 
-        private void Update()
+        protected virtual void Update()
         {
-            attackSpeed -= Time.deltaTime; // 공격속도 돌리기
+            curAttackSpeed -= Time.deltaTime; // 공격속도 돌리기
             CheckState();
             ChangeState();
 
@@ -112,7 +113,7 @@ namespace Charater
                     break;
                 case State.IsAttack:
                     animator.SetBool(hashIsRun, false);
-                    if (attackSpeed <= 0)
+                    if (curAttackSpeed <= 0)
                     {
                         Attack();
                     }
@@ -127,6 +128,7 @@ namespace Charater
                     }
                     break;
                 case State.Winner:
+                    animator.SetBool(hashIsRun, false);
                     break;
             }
         }
@@ -139,7 +141,6 @@ namespace Charater
             if (curEnemy != null)
             {
                 enemyDistance = Vector3.Distance(curEnemy.transform.position, transform.position);
-                transform.LookAt(curEnemy.transform.position);
 
                 if (enemyDistance <= attackRange) // 공격 범위 안에 적이 들어왔을 때
                 {
@@ -189,14 +190,14 @@ namespace Charater
             }
         }
         protected virtual void Attack()
-        { 
-            if(state != State.Die)
-            animator.SetTrigger(hashAttack);
-        }
-        private void TakeDamage(int damage)
         {
-            curHp -= damage;
+            if (state != State.Die)
+            {
+                animator.SetTrigger(hashAttack);
+                curAttackSpeed =  maxAttackSpeed;
+            }
         }
+       
         #endregion
 
         #region Public_Function
@@ -206,6 +207,10 @@ namespace Charater
             {
                 curEnemy.GetComponent<Character>().TakeDamage(damage);
             }
+        }
+        public void TakeDamage(int damage)
+        {
+            curHp -= damage;
         }
         #endregion
 

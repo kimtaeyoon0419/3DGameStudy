@@ -5919,12 +5919,13 @@ MonoBehaviour:
   curEnemy: {fileID: 0}
   enemyDistance: 0
   attackRange: 1.2
-  attackSpeed: 1
+  maxAttackSpeed: 1
+  curAttackSpeed: 0
   damage: 1
   maxHp: 10
   curHp: 0
   nmAgent: {fileID: 0}
-  dieEffect: {fileID: 6855314210357232287, guid: 7c2a9b83b809a0848915fabd9596b68b, type: 3}
+  dieEffect: {fileID: 6855314210357232287, guid: 731b9723528af3042998e395927466bb, type: 3}
 --- !u!195 &7251750276505408661
 NavMeshAgent:
   m_ObjectHideFlags: 0

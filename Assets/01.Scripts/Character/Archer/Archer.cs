@@ -14,7 +14,7 @@ public class Archer : Character
     protected override void Attack()
     {
         base.Attack();
-        if(attackSpeed <= 0)
+        if(curAttackSpeed <= 0)
         Instantiate(shotSfx, shotPos.transform.position, Quaternion.Euler(shotPos.transform.rotation.x, shotPos.transform.rotation.y, shotPos.transform.rotation.z));
     }
 }
