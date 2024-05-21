@@ -35,6 +35,7 @@ namespace Charater
         [SerializeField] protected float speed;
         [SerializeField] protected GameObject curEnemy;
         [SerializeField] protected float enemyDistance;
+        private protected bool isDie;
         private bool isFindEnemyCo = true;
 
         [Header("Stat")]
@@ -52,6 +53,9 @@ namespace Charater
         protected readonly int hashIsRun = Animator.StringToHash("IsRun");
         protected readonly int hashAttack = Animator.StringToHash("Attack");
         protected readonly int hashDeath = Animator.StringToHash("Death");
+
+        [Header("Effect")]
+        [SerializeField] protected GameObject dieEffect;
 
         #region Unity_Function
 
@@ -114,8 +118,12 @@ namespace Charater
                     }
                     break;
                 case State.Die:
-                    StopCoroutine(Co_FindEnemy());
-                    StartCoroutine(Co_DeathAnim());
+                    if (!isDie)
+                    {
+                        isDie= true;
+                        StopCoroutine(Co_FindEnemy());
+                        StartCoroutine(Co_DeathAnim());
+                    }
                     break;
                 case State.Winner:
                     break;
@@ -249,6 +257,7 @@ namespace Charater
             animator.SetTrigger(hashDeath);
             yield return new WaitForSeconds(0.05f);
             float curAnimationTime =animator.GetCurrentAnimatorStateInfo(0).length;
+            Instantiate(dieEffect, gameObject.transform.position, Quaternion.identity);
             yield return new WaitForSeconds(curAnimationTime);
             Destroy(gameObject);
         }

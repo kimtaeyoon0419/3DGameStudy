@@ -16774,6 +16774,7 @@ MonoBehaviour:
   maxHp: 10
   curHp: 0
   nmAgent: {fileID: 0}
+  dieEffect: {fileID: 6855314210357232287, guid: 7c2a9b83b809a0848915fabd9596b68b, type: 3}
 --- !u!195 &1922608590
 NavMeshAgent:
   m_ObjectHideFlags: 0
