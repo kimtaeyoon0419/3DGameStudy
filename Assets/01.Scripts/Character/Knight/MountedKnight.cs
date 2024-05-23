@@ -16,13 +16,15 @@ public class MountedKnight : Character
     public float dashSpeed;
     public float dashTime;
     public int skillDamage;
+    private float orignalspeed;
+    private float originalacceleration;
 
     protected override void Start()
     {
         boxCollider = GetComponent<BoxCollider>();  
         base.Start();
-        float orignalspeed = nmAgent.speed;
-        float originalacceleration = nmAgent.acceleration;
+        orignalspeed = nmAgent.speed;
+        originalacceleration = nmAgent.acceleration;
         DashAttack();
 
     }
@@ -36,10 +38,16 @@ public class MountedKnight : Character
 
     private void OnTriggerEnter(Collider other)
     {
-        isSkill = false;
-        boxCollider.enabled = false;
-        other.gameObject.GetComponent<Character>().TakeDamage(skillDamage);
-        float orignalspeed = nmAgent.speed;
-        float originalacceleration = nmAgent.acceleration;
+        if (isSkill)
+        {
+            if (other.gameObject.GetComponent<Character>().team != team)
+            {
+                boxCollider.enabled = false;
+                nmAgent.speed = orignalspeed;
+                nmAgent.acceleration = originalacceleration;
+                other.gameObject.GetComponent<Character>().TakeDamage(skillDamage);
+                isSkill = false;
+            }
+        }
     }
 }

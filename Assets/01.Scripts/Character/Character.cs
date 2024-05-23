@@ -14,7 +14,7 @@ namespace Charater
     public class Character : MonoBehaviour
     {
         #region enum
-        protected enum Team
+        public enum Team
         {
             blue,
             red
@@ -30,8 +30,8 @@ namespace Charater
         #endregion
 
         [Header("State")]
-        [SerializeField] protected Team team;
         [SerializeField] protected State state;
+        [SerializeField]public Team team;
         [SerializeField] protected float speed;
         [SerializeField] protected GameObject curEnemy;
         [SerializeField] protected float enemyDistance;
@@ -122,6 +122,7 @@ namespace Charater
                     if (!isDie)
                     {
                         isDie= true;
+                        nmAgent.speed = 0;
                         StopAllCoroutines();
                         animator.SetTrigger(hashDeath);
                         StartCoroutine(Co_DeathAnim());
