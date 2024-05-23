@@ -1,52 +1,54 @@
-// # System
-using System.Collections;
-using System.Collections.Generic;
-
-// # Unity
-using UnityEngine;
-using Charater;
-
-public class MountedKnight : Character
+namespace AutoBattle.Charater
 {
-    [SerializeField] private bool skillUse = false;
-    [SerializeField] private bool isSkill = false;
-    [SerializeField] private BoxCollider boxCollider;
+    // # System
+    using System.Collections;
+    using System.Collections.Generic;
 
-    [Header("Skill")]
-    public float dashSpeed;
-    public float dashTime;
-    public int skillDamage;
-    private float orignalspeed;
-    private float originalacceleration;
+    // # Unity
+    using UnityEngine;
 
-    protected override void Start()
+    public class MountedKnight : Character
     {
-        boxCollider = GetComponent<BoxCollider>();  
-        base.Start();
-        orignalspeed = nmAgent.speed;
-        originalacceleration = nmAgent.acceleration;
-        DashAttack();
+        [SerializeField] private bool skillUse = false;
+        [SerializeField] private bool isSkill = false;
+        [SerializeField] private BoxCollider boxCollider;
 
-    }
+        [Header("Skill")]
+        public float dashSpeed;
+        public float dashTime;
+        public int skillDamage;
+        private float orignalspeed;
+        private float originalacceleration;
 
-    private void DashAttack()
-    {
-        isSkill = true;
-        nmAgent.speed = dashSpeed;
-        nmAgent.acceleration = dashSpeed;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (isSkill)
+        protected override void Start()
         {
-            if (other.gameObject.GetComponent<Character>().team != team)
+            boxCollider = GetComponent<BoxCollider>();
+            base.Start();
+            orignalspeed = nmAgent.speed;
+            originalacceleration = nmAgent.acceleration;
+            DashAttack();
+
+        }
+
+        private void DashAttack()
+        {
+            isSkill = true;
+            nmAgent.speed = dashSpeed;
+            nmAgent.acceleration = dashSpeed;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (isSkill)
             {
-                boxCollider.enabled = false;
-                nmAgent.speed = orignalspeed;
-                nmAgent.acceleration = originalacceleration;
-                other.gameObject.GetComponent<Character>().TakeDamage(skillDamage);
-                isSkill = false;
+                if (other.gameObject.GetComponent<Character>().team != team)
+                {
+                    boxCollider.enabled = false;
+                    nmAgent.speed = orignalspeed;
+                    nmAgent.acceleration = originalacceleration;
+                    other.gameObject.GetComponent<Character>().TakeDamage(skillDamage);
+                    isSkill = false;
+                }
             }
         }
     }

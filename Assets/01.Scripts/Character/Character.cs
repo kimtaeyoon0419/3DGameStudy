@@ -1,4 +1,4 @@
-namespace Charater
+namespace AutoBattle.Charater
 {
     // # System
     using System.Collections;
@@ -10,6 +10,7 @@ namespace Charater
     using UnityEngine.AI;
     using UnityEngine.PlayerLoop;
     using UnityEngine.UI;
+
     [RequireComponent(typeof(Rigidbody))]
     public class Character : MonoBehaviour
     {
@@ -19,7 +20,7 @@ namespace Charater
             blue,
             red
         }
-        protected enum State
+        public enum CharState
         {
             Idle,
             Trace,
@@ -30,8 +31,8 @@ namespace Charater
         #endregion
 
         [Header("State")]
-        [SerializeField] protected State state;
-        [SerializeField]public Team team;
+        [SerializeField] public CharState state;
+        [SerializeField] public Team team;
         [SerializeField] protected float speed;
         [SerializeField] protected GameObject curEnemy;
         [SerializeField] protected float enemyDistance;
@@ -76,6 +77,7 @@ namespace Charater
             {
                 GameManager.instance.redUnits.Add(gameObject);
             }
+            state = CharState.Idle;
             StartCoroutine(Co_FindEnemy());
             curHp = maxHp;
         }
@@ -94,7 +96,7 @@ namespace Charater
 
         private void LateUpdate()
         {
-            if(state != State.Die && isFindEnemyCo == true && curEnemy == null)
+            if(state != CharState.Die && isFindEnemyCo == true && curEnemy == null)
             {
                 StopCoroutine(Co_FindEnemy());
                 StartCoroutine(Co_FindEnemy());
@@ -107,18 +109,18 @@ namespace Charater
         {
             switch (state)
             {
-                case State.Trace:
+                case CharState.Trace:
                     animator.SetBool(hashIsRun, true);
                     FollowEnemy();
                     break;
-                case State.IsAttack:
+                case CharState.IsAttack:
                     animator.SetBool(hashIsRun, false);
                     if (curAttackSpeed <= 0)
                     {
                         Attack();
                     }
                     break;
-                case State.Die:
+                case CharState.Die:
                     if (!isDie)
                     {
                         isDie= true;
@@ -128,7 +130,7 @@ namespace Charater
                         StartCoroutine(Co_DeathAnim());
                     }
                     break;
-                case State.Winner:
+                case CharState.Winner:
                     animator.SetBool(hashIsRun, false);
                     break;
             }
@@ -139,17 +141,17 @@ namespace Charater
         /// </summary>
         private void ChangeState()
         {
-            if (curEnemy != null)
+            if (curEnemy != null && GameManager.instance.state == GameState.Battle)
             {
                 enemyDistance = Vector3.Distance(curEnemy.transform.position, transform.position);
 
                 if (enemyDistance <= attackRange) // 공격 범위 안에 적이 들어왔을 때
                 {
-                    state = State.IsAttack;
+                    state = CharState.IsAttack;
                 }
                 if (enemyDistance > attackRange) // 공격 범위 밖으로 적이 나갔을 때
                 {
-                    state = State.Trace;
+                    state = CharState.Trace;
                 }
                 if (curHp <= 0) // 체력이 0 이거나 아래로 내려갔을 때
                 {
@@ -161,20 +163,20 @@ namespace Charater
                     {
                         GameManager.instance.blueUnits.Remove(gameObject);
                     }
-                    state = State.Die;
+                    state = CharState.Die;
                 }
-                if (GameManager.instance.blueWin) // 블루팀이 승리했을 때
+                if (GameManager.instance.state == GameState.BlueWin) // 블루팀이 승리했을 때
                 {
                     if (team == Team.blue) // 블루팀이라면
                     {
-                        state = State.Winner;
+                        state = CharState.Winner;
                     }
                 }
-                if (GameManager.instance.redWin) // 레드팀이 승리했을 때
+                if (GameManager.instance.state == GameState.RedWin) // 레드팀이 승리했을 때
                 {
                     if (team == Team.red) // 레드팀이라면
                     {
-                        state = State.Winner;
+                        state = CharState.Winner;
                     }
                 }
             }
@@ -192,7 +194,7 @@ namespace Charater
         }
         protected virtual void Attack()
         {
-            if (state != State.Die)
+            if (state != CharState.Die)
             {
                 animator.SetTrigger(hashAttack);
                 curAttackSpeed =  maxAttackSpeed;
