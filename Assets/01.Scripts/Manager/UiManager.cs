@@ -35,6 +35,7 @@ namespace AutoBattle.Manager
         }
         public void ReStart()
         {
+            GameManager.instance.ReStartGame();
             SceneManager.LoadScene("Main");
         }
     }

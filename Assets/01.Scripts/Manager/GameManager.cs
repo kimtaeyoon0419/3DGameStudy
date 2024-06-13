@@ -4,6 +4,7 @@ namespace AutoBattle
     // # System
     using System.Collections;
     using System.Collections.Generic;
+    using System.Security.Cryptography;
 
     // # Unity
     using UnityEngine;
@@ -15,7 +16,6 @@ namespace AutoBattle
         BlueWin
     }
 
-
     public class GameManager : MonoBehaviour
     {
         public static GameManager instance;
@@ -26,11 +26,6 @@ namespace AutoBattle
         [Header("TeamList")]
         public List<GameObject> redUnits = new List<GameObject>();
         public List<GameObject> blueUnits = new List<GameObject>();
-
-        [Header("VFX")]
-        public GameObject boomVfx;
-        public Transform[] redBoom;
-        public Transform[] blueBoom;
 
         private void Awake()
         {
@@ -65,13 +60,11 @@ namespace AutoBattle
             {
                 state = GameState.BlueWin;
                 Debug.Log("ºí·çÆÀÀÌ ½Â¸®Çß½À´Ï´Ù!");
-                StartCoroutine(Co_WinnerBoom(0));
             }
             if (blueUnits.Count <= 0)
             {
                 state = GameState.RedWin;
                 Debug.Log("·¹µåÆÀÀÌ ½Â¸®Çß½À´Ï´Ù!");
-                StartCoroutine(Co_WinnerBoom(1));
             }
         }
         #endregion
@@ -80,7 +73,7 @@ namespace AutoBattle
         public void StartGame()
         {
             state = GameState.Battle;
-            for(int i = 0; i < blueUnits.Count; i++)
+            for (int i = 0; i < blueUnits.Count; i++)
             {
                 blueUnits[i].GetComponent<Character>().state = Character.CharState.Trace;
             }
@@ -89,36 +82,12 @@ namespace AutoBattle
                 redUnits[i].GetComponent<Character>().state = Character.CharState.Trace;
             }
         }
-        #endregion
 
-        #region Coroutine_Function
-        /// <summary>
-        /// ÀÌ±äÆÀ¿¡ ÆøÁ×
-        /// </summary>
-        /// <param name="winner">0Àº blueteam 1Àº redteam</param>
-        /// <returns></returns>
-        IEnumerator Co_WinnerBoom(int winner)
+        public void ReStartGame()
         {
-            if (winner == 0)
-            {
-                for (int i = 0; i < blueBoom.Length; i++)
-                {
-                    yield return new WaitForSeconds(0.5f);
-                    Instantiate(boomVfx, blueBoom[i].position, Quaternion.identity);
-                }
-            }
-            if (winner == 1)
-            {
-                for (int i = 0; i < redBoom.Length; i++)
-                {
-                    yield return new WaitForSeconds(0.5f);
-                    Instantiate(boomVfx, redBoom[i].position, Quaternion.identity);
-                }
-            }
-            else
-            {
-                yield return null;
-            }
+            redUnits.Clear();
+            blueUnits.Clear();
+            state = GameState.GetReady;
         }
         #endregion
     }
